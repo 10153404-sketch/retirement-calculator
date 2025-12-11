@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <title>退休財務規劃計算器</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- ===== Welcome (full-screen) ===== -->
+  <div id="welcome">
+    <img src="dots.svg" class="welcome-dots" alt="dots">
+    <div class="welcome-overlay"></div>
+
+    <div class="welcome-content">
+      <h1 class="welcome-title">Welcome.</h1>
+      <p class="welcome-subtitle">
+        歡迎使用專業的<br>
+        退休財務規劃計算器</p>
+      <p class="welcome-describe">
+        隨著年輕族群越來越重視理財與退休準備<br>
+        許多人在規劃退休金時常缺乏直覺的工具<br>
+        來理解「報酬率、時間、投入金額」之間<br>
+        的關係</p>
+      <button id="startBtn" class="welcome-btn">Start <span class="arrow">➜</span></button>
+    </div>
+
+    <div class="welcome-image" role="img" aria-label="illustration"></div>
+  </div>
+
+  <!-- ===== Main (hidden until Start) ===== -->
+  <div id="main-area" class="hidden">
+    <div class="container-inner">
+
+      <!-- Tabs -->
+      <div class="tabs" role="tablist" aria-label="功能選單">
+        <div class="tab active" data-target="tab1" role="tab">複利終值計算</div>
+        <div class="tab" data-target="tab2" role="tab">退休目標金額</div>
+        <div class="tab" data-target="tab3" role="tab">目標月儲蓄額</div>
+      </div>
+
+      <!-- CONTENT PANELS (only one visible at a time) -->
+      <section id="tab1" class="panel active">
+        <div class="layout-row">
+          <!-- left: inputs -->
+          <div class="left-col">
+            <div class="input-card glass">
+              <h2>輸入參數</h2>
+
+              <label>初始本金 P（元）</label>
+              <input id="fv_P" type="number" value="100000" min="0">
+
+              <label>每月投入 M（元）</label>
+              <input id="fv_M" type="number" value="5000" min="0">
+
+              <label>投資年數 t</label>
+              <div class="slider-row">
+                <input id="fv_t" type="range" min="1" max="40" value="20">
+                <span id="fv_t_text">20 年</span>
+              </div>
+
+              <label>年報酬率 r（%）</label>
+              <div class="slider-row">
+                <input id="fv_r" type="range" min="0" max="20" value="7" step="0.1">
+                <span id="fv_r_text">7.0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- right: results / chart / formula -->
+          <div class="right-col">
+            <div class="result-row">
+              <div class="result-card" id="fv_A_card">最終資產 A：NT$ --</div>
+              <div class="result-card" id="fv_totalInvest_card">累積投入：NT$ --</div>
+              <div class="result-card" id="fv_interest_card">總利息：NT$ --</div>
+            </div>
+
+            <div class="chart-wrap">
+              <canvas id="chart_fv"></canvas>
+            </div>
+
+            <div class="formula">
+<pre>
+複利終值（含單筆 P 與每月投入 M）：
+A = P × (1 + r_m)^m  +  M × [ ( (1 + r_m)^m − 1 ) / r_m ]
+
+r_m = (1 + r/100)^(1/12) − 1
+m = t × 12
+</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab2" class="panel">
+        <div class="layout-row">
+          <div class="left-col">
+            <div class="input-card glass">
+              <h2>輸入參數</h2>
+
+              <label>每月生活費 L（現值）</label>
+              <input id="rt_L" type="number" value="35000" min="0">
+
+              <label>距離退休年數 n</label>
+              <div class="slider-row">
+                <input id="rt_n" type="range" min="1" max="40" value="30">
+                <span id="rt_n_text">30 年</span>
+              </div>
+
+              <label>預期通膨率（%）</label>
+              <div class="slider-row">
+                <input id="rt_infl" type="range" min="0" max="10" value="2" step="0.1">
+                <span id="rt_infl_text">2.0%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-col">
+            <div class="result-row">
+              <div class="result-card" id="rt_futureAnnual_card">通膨後年支出：NT$ --</div>
+              <div class="result-card" id="rt_required_card">退休所需總資產 N：NT$ --</div>
+            </div>
+
+            <div class="chart-wrap">
+              <canvas id="chart_rt"></canvas>
+            </div>
+
+            <div class="formula">
+<pre>
+未來年支出（含通膨）：
+A_future = L × 12 × (1 + inflation)^n
+
+退休所需資產（4% 法則）：
+N = A_future / 0.04
+</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab3" class="panel">
+        <div class="layout-row">
+          <div class="left-col">
+            <div class="input-card glass">
+              <h2>輸入參數</h2>
+
+              <label>目標退休金 N（元）</label>
+              <input id="ms_N" type="number" value="10000000" min="0">
+
+              <label>現有單筆投入 P（元）</label>
+              <input id="ms_P" type="number" value="0" min="0">
+
+              <label>距離退休年數 t</label>
+              <div class="slider-row">
+                <input id="ms_t" type="range" min="1" max="40" value="30">
+                <span id="ms_t_text">30 年</span>
+              </div>
+
+              <label>預期年報酬率 r（%）</label>
+              <div class="slider-row">
+                <input id="ms_r" type="range" min="0" max="20" value="7" step="0.1">
+                <span id="ms_r_text">7.0%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-col">
+            <div class="result-row">
+              <div class="result-card" id="ms_M_card">每月應儲蓄 M：NT$ --</div>
+              <div class="result-card" id="ms_future_card">累積總資產：NT$ --</div>
+            </div>
+
+            <div class="chart-wrap">
+              <canvas id="chart_ms"></canvas>
+            </div>
+
+            <div class="formula">
+<pre>
+M = ( N − P × (1+r_m)^m ) × r_m / ( (1+r_m)^m − 1 )
+
+r_m = (1 + r/100)^(1/12) − 1
+m = t × 12
+</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
