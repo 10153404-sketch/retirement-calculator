@@ -113,17 +113,6 @@ canvas{width:100%;height:320px;display:block}
 
 /* responsive */
 @media screen and (max-width: 768px) {
-   .layout-row {
-        flex-direction: row !important; 
-        overflow-x: auto; 
-        padding: 0 12px; 
-        min-width: 800px; 
-    }
-    
-    .left-col, .right-col {
-        min-width: 380px;
-        flex-shrink: 0; 
-    }
     #welcome {
         position: static; 
         min-height: 100vh;
@@ -135,7 +124,6 @@ canvas{width:100%;height:320px;display:block}
         position: relative;
         margin-bottom: 20px;
     }
-    
     .welcome-content {
         width: 100%;
         padding: 20px; 
@@ -160,7 +148,9 @@ canvas{width:100%;height:320px;display:block}
     }
     .welcome-dots{display:none;}
     .welcome-overlay{display:none;}
+    .layout-row{flex-direction:column;padding:12px}
 }
+
 
 
 
