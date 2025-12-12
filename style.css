@@ -112,46 +112,87 @@ canvas{width:100%;height:320px;display:block}
 .left-col > .input-card{height: 100%;}
 
 /* responsive */
-@media screen and (max-width: 768px) {
-    #welcome {
-        position: static; 
-        min-height: 100vh;
-        display: block;
-    }
-    .welcome-image {
-        width: 100%;
-        height: 40vh;
-        position: relative;
-        margin-bottom: 20px;
-    }
-    .welcome-content {
-        width: 100%;
-        padding: 20px; 
-        align-items: center;
-        text-align: center;
-        margin: 0;
-    }
+@media (max-width: 768px) {
+  .container-inner {
+    padding: 16px;
+  }
+  #welcome {
+    flex-direction: column;
+  }
+  .welcome-image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+  }
+  .welcome-content {
+    width: 100%;
+    padding: 40px 20px;
+    align-items: center;
+    text-align: center;
+  }
+  .welcome-title {
+    font-size: 48px;
+    margin-left: 0;
+  }
+  .welcome-subtitle {
+    font-size: 20px;
+  }
+  .welcome-describe {
+    font-size: 16px;
+  }
+  .welcome-btn {
+    font-size: 16px;
+    padding: 12px 28px;
+  }
+  .welcome-dots{display: none;}
+  .tabs {
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 0 12px;
+  }
+  .tab {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  .layout-row {
+    flex-direction: column;
+    padding: 12px;
+  }
+  .left-col,
+  .right-col {
+    width: 100%;
+  }
+  .input-card {
+    padding: 14px;
+  }
+  .input-card h2 {
+    font-size: 16px;
+  }
+  .input-card label {
+    font-size: 12px;
+  }
 
-    .welcome-title {
-        font-size: 60px; 
-        margin: 0 0 10px 0;
-        letter-spacing: normal;
-    }
-    
-    .welcome-subtitle {
-        font-size: 20px;
-        line-height: 1.2;
-    }
-    .welcome-discribe {
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
-    .welcome-dots{display:none;}
-    .welcome-overlay{display:none;}
-    .layout-row{flex-direction:column;padding:12px;}
+  /* slider row */
+  .slider-row span {
+    min-width: 50px;
+    font-size: 14px;
+  }
+  .result-row {
+    flex-direction: column;
+  }
+  .result-card {
+    flex: 1 0 100%;
+  }
+
+  canvas {
+    height: 220px;
+  }
+
+  .formula {
+    font-size: 12px;
+    padding: 10px;
+  }
 }
-
-
 
 
 
