@@ -115,6 +115,7 @@ canvas{width:100%;height:320px;display:block}
         position: static; 
         min-height: 100vh;
         display: block;
+        z-index: 10;
     }
     .welcome-image {
         width: 100%;
@@ -129,6 +130,8 @@ canvas{width:100%;height:320px;display:block}
         align-items: center;
         text-align: center;
         margin: 0;
+        position: relative; 
+        z-index: 99; 
     }
 
     .welcome-title {
@@ -146,7 +149,13 @@ canvas{width:100%;height:320px;display:block}
         margin-bottom: 20px;
     }
     .welcome-dots{display:none}
+    .welcome-overlay {
+        pointer-events: none; 
+        z-index: 1; 
+    }
 }
+
 .left-col,.right-col{display:flex; flex-direction: column;}
 
 .left-col > .input-card{height: 100%;}
+
